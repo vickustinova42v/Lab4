@@ -13,6 +13,7 @@ namespace Lab4
 {
     public partial class Form1 : Form
     {
+        public string filledChart;
         public Form1()
         {
             InitializeComponent();
@@ -22,11 +23,23 @@ namespace Lab4
 
         private void calculateClick(object sender, EventArgs e)
         {
-            chart1.Series.Clear();
-            chart1.Series.Add("Y");
-            chart1.Series.Add("Z");
-            chart1.Series["Y"].ChartType = SeriesChartType.Line;
-            chart1.Series["Z"].ChartType = SeriesChartType.Line;
+            if (filledChart == "" || filledChart == "chart2") 
+            {
+                chart1.Series.Clear();
+                chart1.Series.Add("Y");
+                chart1.Series.Add("Z");
+                chart1.Series["Y"].ChartType = SeriesChartType.Line;
+                chart1.Series["Z"].ChartType = SeriesChartType.Line;
+                filledChart = "chart1";
+            } else
+            {
+                chart2.Series.Clear();
+                chart2.Series.Add("Y");
+                chart2.Series.Add("Z");
+                chart2.Series["Y"].ChartType = SeriesChartType.Line;
+                chart2.Series["Z"].ChartType = SeriesChartType.Line;
+                filledChart = "chart2";
+            }
 
             string x0String = this.x0.Text;
             string xEndString = this.xEnd.Text;
@@ -51,8 +64,15 @@ namespace Lab4
             chart1.ChartAreas[0].AxisY.Maximum = Double.NaN; // Авто-масштаб
 
             for (int i = 0; i <= steps; i++) {
-                chart1.Series["Y"].Points.AddXY(x, y);
-                chart1.Series["Z"].Points.AddXY(x, z);
+                if (filledChart == "chart1")
+                {
+                    chart1.Series["Y"].Points.AddXY(x, y);
+                    chart1.Series["Z"].Points.AddXY(x, z);
+                } else
+                {
+                    chart2.Series["Y"].Points.AddXY(x, y);
+                    chart2.Series["Z"].Points.AddXY(x, z);
+                }
 
                 double k1_y = h * f1(x, y, z);
                 double k1_z = h * f2(x, y, z);
