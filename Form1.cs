@@ -30,6 +30,8 @@ namespace Lab4
                 chart1.Series.Add("Z");
                 chart1.Series["Y"].ChartType = SeriesChartType.Line;
                 chart1.Series["Z"].ChartType = SeriesChartType.Line;
+                chart1.ChartAreas[0].AxisY.Minimum = Double.NaN; // Авто-масштаб
+                chart1.ChartAreas[0].AxisY.Maximum = Double.NaN; // Авто-масштаб
                 filledChart = "chart1";
             } else
             {
@@ -38,6 +40,8 @@ namespace Lab4
                 chart2.Series.Add("Z");
                 chart2.Series["Y"].ChartType = SeriesChartType.Line;
                 chart2.Series["Z"].ChartType = SeriesChartType.Line;
+                chart2.ChartAreas[0].AxisY.Minimum = Double.NaN; // Авто-масштаб
+                chart2.ChartAreas[0].AxisY.Maximum = Double.NaN; // Авто-масштаб
                 filledChart = "chart2";
             }
 
@@ -47,21 +51,21 @@ namespace Lab4
             string z0String = this.z0.Text;
             string stepsString = this.steps.Text;
 
-            double x0 = Convert.ToDouble(x0String);
-            double xEnd = Convert.ToDouble(xEndString);
-            double y0 = Convert.ToDouble(y0String);
-            double z0 = Convert.ToDouble(z0String);
-            int steps = Convert.ToInt32(stepsString);
+            double x0 = double.Parse(x0String);
+            double xEnd = double.Parse(xEndString);
+            double y0 = double.Parse(y0String);
+            double z0 = double.Parse(z0String);
+            int steps = int.Parse(stepsString);
+
+            chart1.ChartAreas[0].AxisX.Minimum = x0;
+            chart1.ChartAreas[0].AxisX.Maximum = xEnd;
+            chart2.ChartAreas[0].AxisX.Minimum = x0;
+            chart2.ChartAreas[0].AxisX.Maximum = xEnd;
 
             double h = (xEnd - x0) / steps;//шаг интергирования
             double x = x0;
             double y = y0;
             double z = z0;
-
-            chart1.ChartAreas[0].AxisX.Minimum = x0;
-            chart1.ChartAreas[0].AxisX.Maximum = xEnd;
-            chart1.ChartAreas[0].AxisY.Minimum = Double.NaN; // Авто-масштаб
-            chart1.ChartAreas[0].AxisY.Maximum = Double.NaN; // Авто-масштаб
 
             for (int i = 0; i <= steps; i++) {
                 if (filledChart == "chart1")
